@@ -1,0 +1,15 @@
+{
+  "name": "bloom",
+  "version": "1.0.0",
+  "description": "App for writers",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bisola Omisore",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.4"
+  }
+}
