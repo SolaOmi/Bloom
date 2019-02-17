@@ -1,1 +1,12 @@
 <h1>This is the writings page!</h1>
+
+<% writings.forEach((writing) => { %>
+  <div>
+    <h4>
+      <%= writing.title %>
+    </h4>
+    <p>
+      <%= writing.body %>
+    </p>
+  </div>
+<% }); %>
