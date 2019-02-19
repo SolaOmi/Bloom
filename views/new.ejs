@@ -1,0 +1,11 @@
+<% include partials/header %>
+
+<h1>Create a New writing</h1>
+
+<form action="/writings" method="POST">
+  <input type="text" name="title" placeholder="title">
+  <textarea id="new-writing-body" name="body" placeholder="Add your writing here..."></textarea>
+  <button>Submit!</button>
+</form>
+
+<% include partials/footer %>
