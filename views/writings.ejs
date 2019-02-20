@@ -1,16 +1,23 @@
 <% include partials/header %>
 
-<h1>This is the writings page!</h1>
-
-<% writings.forEach((writing) => { %>
-  <div>
-    <h4>
-      <%= writing.title %>
-    </h4>
+<div class="container">
+  <header class="jumbotron">
+    <h1>This is the writings page!</h1>
     <p>
-      <%= writing.body %>
+      <a class="btn btn-primary btn-lg" href="/writings/new">Add New Writing</a>
     </p>
-  </div>
-<% }); %>
+  </header>
+
+  <% writings.forEach((writing) => { %>
+    <div>
+      <h4>
+        <%= writing.title %>
+      </h4>
+      <p>
+        <%= writing.body %>
+      </p>
+    </div>
+  <% }); %>
+</div>
 
 <% include partials/footer %>
