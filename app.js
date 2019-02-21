@@ -8,7 +8,9 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const PORT = process.env.PORT || 3000;
 
-mongoose.connect(process.env.DEVELOPMENTDATABASEURL, { useNewUrlParser: true });
+let url = process.env.DATABASEURL || process.env.DEVELOPMENTDATABASEURL;
+mongoose.connect(url, { useNewUrlParser: true });
+
 app.set("view engine", "ejs");
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
