@@ -45,7 +45,7 @@ app.get("/writings", (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      res.render("writings", {writings: writings});
+      res.render("index", {writings: writings});
     }
   });
 });
