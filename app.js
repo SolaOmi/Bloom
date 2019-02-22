@@ -52,9 +52,10 @@ app.get("/writings", (req, res) => {
 
 app.post("/writings", (req, res) => {
   let title = req.body.title;
+  let type = req.body.type;
   // preserve line breaks from textarea
   let body = req.body.body.replace(/\n\r?/g, '<br />');
-  let newWriting = {title: title, body: body};
+  let newWriting = {title: title, body: body, type: type};
 
   Writing.create(newWriting, (err, writing) => {
     if (err) {
@@ -68,5 +69,15 @@ app.post("/writings", (req, res) => {
 app.get("/writings/new", (req, res) => {
   res.render("new");
 });
+
+app.get("/writings/:id", (req, res) => {
+  Writing.findById(req.params.id, (err, writing) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("show", {writing: writing});
+    }
+  });
+})
 
 app.listen(PORT, () => console.log(`Server is running on port ${ PORT }!`));
