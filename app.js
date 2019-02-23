@@ -72,8 +72,14 @@ app.get("/writings/new", (req, res) => {
 
 app.get("/writings/:id", (req, res) => {
   Writing.findById(req.params.id, (err, writing) => {
-    if (err) {
-      console.log(err);
+    if (err || !writing) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("Writing not found");
+      }
+      
+      res.redirect("back");
     } else {
       res.render("show", {writing: writing});
     }
