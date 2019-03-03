@@ -6,6 +6,7 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const Writing = require("./models/writings");
 const PORT = process.env.PORT || 3000;
 const LOREM_IPSUM = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
@@ -15,14 +16,6 @@ mongoose.connect(url, { useNewUrlParser: true });
 app.set("view engine", "ejs");
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
-
-let writingSchema = new mongoose.Schema({
-  title: String,
-  type: String,
-  body: String
-});
-
-let Writing = mongoose.model("Writing", writingSchema);
 
 // Writing.create(
 //   {
@@ -78,7 +71,7 @@ app.get("/writings/:id", (req, res) => {
       } else {
         console.log("Writing not found");
       }
-      
+
       res.redirect("back");
     } else {
       res.render("show", {writing: writing});
