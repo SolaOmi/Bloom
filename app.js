@@ -7,7 +7,11 @@ const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const Writing = require("./models/writings");
+const seedDB = require("./seeds");
 const PORT = process.env.PORT || 3000;
+
+// Fill database with fake seed data.
+seedDB();
 
 let url = process.env.DATABASEURL || process.env.DEVELOPMENTDATABASEURL;
 mongoose.connect(url, { useNewUrlParser: true });
