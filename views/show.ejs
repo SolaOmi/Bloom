@@ -4,4 +4,8 @@
 <p><%= writing.type %></p>
 <p><%- writing.body %></p>
 
+<% writing.comments.forEach((comment) => { %>
+  <p>
+    <strong><%= comment.author %></strong> - <%= comment.text %></p>
+<% }); %>
 <% include partials/footer %>

@@ -53,7 +53,7 @@ app.get("/writings/new", (req, res) => {
 });
 
 app.get("/writings/:id", (req, res) => {
-  Writing.findById(req.params.id, (err, writing) => {
+  Writing.findById(req.params.id).populate("comments").exec((err, writing) => {
     if (err || !writing) {
       if (err) {
         console.log(err);
