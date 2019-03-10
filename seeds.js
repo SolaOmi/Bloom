@@ -29,32 +29,36 @@ let seedDB = () => {
       console.log(err);
     }
     console.log("removed writings!");
-
-    // Add a few writings.
-    data.forEach((seed) => {
-      Writing.create(seed, (err, writing) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log("added a writing");
-
-          // Create a comment
-          Comment.create(
-            {
-              text: "This story is really good!!",
-              author: "Foobar jr."
-            }, (err, comment) => {
-              if (err) {
-                console.log(err);
-              } else {
-                writing.comments.push(comment);
-                writing.save();
-                console.log("Created new comment");
-              }
-            });
-        }
-      });
-    })
+    Comment.deleteMany({}, (err) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log("removed comments!");
+      // Add a few writings.
+      data.forEach((seed) => {
+        Writing.create(seed, (err, writing) => {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log("added a writing");
+            // Create a comment
+            Comment.create(
+              {
+                text: "This story is really good!!",
+                author: "Foobar jr."
+              }, (err, comment) => {
+                if (err) {
+                  console.log(err);
+                } else {
+                  writing.comments.push(comment);
+                  writing.save();
+                  console.log("Created new comment");
+                }
+              });
+            }
+          });
+        });
+    });
   });
 }
 
