@@ -7,6 +7,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const Writing = require("./models/writings");
+const Comment = require("./models/comments");
 const seedDB = require("./seeds");
 const PORT = process.env.PORT || 3000;
 
@@ -72,10 +73,36 @@ app.get("/writings/:id", (req, res) => {
 
 app.get("/writings/:id/comments/new", (req, res) => {
   Writing.findById(req.params.id, (err, writing) => {
-    if (err) {
-      console.log(err);
+    if (err || !writing) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("Writing not found");
+      }
     } else {
       res.render("comments/new", {writing: writing});
+    }
+  });
+});
+
+app.post("/writings/:id/comments", (req, res) => {
+  Writing.findById(req.params.id, (err, writing) => {
+    if (err || !writing) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("Writing not found");
+      }
+    } else {
+      Comment.create(req.body.comment, (err, comment) => {
+        if (err) {
+          console.log(err);
+        } else {
+          writing.comments.push(comment);
+          writing.save();
+          res.redirect("/writings/" + writing._id);
+        }
+      });
     }
   });
 });

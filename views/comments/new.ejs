@@ -3,7 +3,7 @@
 <div class="container">
   <h1 class="text-center">Add New Comment</h1>
 
-  <form action="/writings<%= writing._id %>/comments" method="POST">
+  <form action="/writings/<%= writing._id %>/comments" method="POST">
     <div class="form-group">
       <input class="form-control" type="text" name="comment[text]" placeholder="text">
     </div>

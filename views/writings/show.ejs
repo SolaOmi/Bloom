@@ -4,6 +4,10 @@
 <p><%= writing.type %></p>
 <p><%- writing.body %></p>
 
+<p>
+  <a class="btn btn-success" href="/writings/<%= writing._id %>/comments/new">Add New Comment</a>
+</p>
+
 <% writing.comments.forEach((comment) => { %>
   <p>
     <strong><%= comment.author %></strong> - <%= comment.text %></p>
