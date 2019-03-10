@@ -27,7 +27,7 @@ app.get("/writings", (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      res.render("index", {writings: writings});
+      res.render("writings/index", {writings: writings});
     }
   });
 });
@@ -49,7 +49,7 @@ app.post("/writings", (req, res) => {
 });
 
 app.get("/writings/new", (req, res) => {
-  res.render("new");
+  res.render("writings/new");
 });
 
 app.get("/writings/:id", (req, res) => {
@@ -63,9 +63,21 @@ app.get("/writings/:id", (req, res) => {
 
       res.redirect("back");
     } else {
-      res.render("show", {writing: writing});
+      res.render("writings/show", {writing: writing});
     }
   });
-})
+});
+
+// ------------------------------ COMMENTS ROUTES -------------------
+
+app.get("/writings/:id/comments/new", (req, res) => {
+  Writing.findById(req.params.id, (err, writing) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("comments/new", {writing: writing});
+    }
+  });
+});
 
 app.listen(PORT, () => console.log(`Server is running on port ${ PORT }!`));
