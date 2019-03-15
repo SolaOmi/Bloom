@@ -14,8 +14,6 @@ const express       = require("express"),
       seedDB        = require("./seeds"),
       PORT          = process.env.PORT || 3000;
 
-// Fill database with fake seed data.
-seedDB();
 
 let url = process.env.DATABASEURL || process.env.DEVELOPMENTDATABASEURL;
 mongoose.connect(url, { useNewUrlParser: true });
@@ -23,6 +21,20 @@ mongoose.connect(url, { useNewUrlParser: true });
 app.set("view engine", "ejs");
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
+// Fill database with fake seed data.
+seedDB();
+
+// PASSPORT CONFIGURATION
+app.use(require("express-session")({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.get("/", (req, res) => res.render("landing"));
 
@@ -105,6 +117,25 @@ app.post("/writings/:id/comments", (req, res) => {
           writing.save();
           res.redirect("/writings/" + writing._id);
         }
+      });
+    }
+  });
+});
+
+// ----------------------- AUTH ROUTES -----------------------
+app.get("/register", (req, res) => {
+  res.render("register");
+});
+
+app.post("/register", (req, res) => {
+  let newUser = new User({username: req.body.username});
+  User.register(newUser, req.body.password, (err, user) => {
+    if (err) {
+      console.log(err);
+      return res.render("register");
+    } else {
+      passport.authenticate("local")(req, res, () => {
+        res.redirect("/writings");
       });
     }
   });
