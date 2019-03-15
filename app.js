@@ -2,14 +2,17 @@ if (process.env.NODE_ENV !== "production") {
   require('dotenv').load();
 }
 
-const express = require("express");
-const app = express();
-const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
-const Writing = require("./models/writings");
-const Comment = require("./models/comments");
-const seedDB = require("./seeds");
-const PORT = process.env.PORT || 3000;
+const express       = require("express"),
+      app           = express(),
+      bodyParser    = require("body-parser"),
+      mongoose      = require("mongoose"),
+      passport      = require("passport"),
+      LocalStrategy = require("passport-local"),
+      Writing       = require("./models/writings"),
+      Comment       = require("./models/comments"),
+      User          = require("./models/user"),
+      seedDB        = require("./seeds"),
+      PORT          = process.env.PORT || 3000;
 
 // Fill database with fake seed data.
 seedDB();
