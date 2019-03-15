@@ -86,7 +86,7 @@ app.get("/writings/:id", (req, res) => {
 
 // ------------------------------ COMMENTS ROUTES -------------------
 
-app.get("/writings/:id/comments/new", (req, res) => {
+app.get("/writings/:id/comments/new", isLoggedIn, (req, res) => {
   Writing.findById(req.params.id, (err, writing) => {
     if (err || !writing) {
       if (err) {
@@ -100,7 +100,7 @@ app.get("/writings/:id/comments/new", (req, res) => {
   });
 });
 
-app.post("/writings/:id/comments", (req, res) => {
+app.post("/writings/:id/comments", isLoggedIn, (req, res) => {
   Writing.findById(req.params.id, (err, writing) => {
     if (err || !writing) {
       if (err) {
@@ -149,7 +149,19 @@ app.post("/login", passport.authenticate("local",
   {
     successRedirect: "/writings",
     failureRedirect: "/login"
-  });
-);
+  }), (req, res) => {
+});
+
+app.get("/logout", (req, res) => {
+  req.logout();
+  res.redirect("/writings");
+});
+
+function isLoggedIn(req, res, next) {
+  if(req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect("/login");
+};
 
 app.listen(PORT, () => console.log(`Server is running on port ${ PORT }!`));
