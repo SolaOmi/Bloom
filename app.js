@@ -141,4 +141,15 @@ app.post("/register", (req, res) => {
   });
 });
 
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
+app.post("/login", passport.authenticate("local",
+  {
+    successRedirect: "/writings",
+    failureRedirect: "/login"
+  });
+);
+
 app.listen(PORT, () => console.log(`Server is running on port ${ PORT }!`));
