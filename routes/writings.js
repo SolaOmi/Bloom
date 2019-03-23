@@ -14,12 +14,16 @@ router.get("/", (req, res) => {
 });
 
 // CREATE - add new writing to DB
-router.post("/", (req, res) => {
+router.post("/", isLoggedIn, (req, res) => {
   let title = req.body.title;
   let type = req.body.type;
   // preserve line breaks from textarea
   let body = req.body.body.replace(/\n\r?/g, '<br />');
-  let newWriting = {title: title, body: body, type: type};
+  let author = {
+    id: req.user._id,
+    username: req.user.username
+  }
+  let newWriting = {title: title, body: body, type: type, author: author};
 
   Writing.create(newWriting, (err, writing) => {
     if (err) {
@@ -31,7 +35,7 @@ router.post("/", (req, res) => {
 });
 
 // NEW - show form to create new writing
-router.get("/new", (req, res) => {
+router.get("/new", isLoggedIn, (req, res) => {
   res.render("writings/new");
 });
 
@@ -51,5 +55,13 @@ router.get("/:id", (req, res) => {
     }
   });
 });
+
+// middleware
+function isLoggedIn(req, res, next) {
+  if(req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect("/login");
+};
 
 module.exports = router;

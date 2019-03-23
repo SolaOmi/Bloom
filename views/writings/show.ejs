@@ -3,6 +3,9 @@
 <h1><%= writing.title %></h1>
 <p><%= writing.type %></p>
 <p><%- writing.body %></p>
+<p>
+  <em>Submitted By <%= writing.author.username %></em>
+</p>
 
 <p>
   <a class="btn btn-success" href="/writings/<%= writing._id %>/comments/new">Add New Comment</a>
