@@ -23,8 +23,7 @@ mongoose.connect(url, { useNewUrlParser: true });
 app.set("view engine", "ejs");
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
-// Fill database with fake seed data.
-seedDB();
+// seedDB() Fill database with fake seed data.
 
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({
